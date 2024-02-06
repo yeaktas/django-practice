@@ -7,25 +7,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 {% endblock css_files %}
 
+{% block title %}
+    {{ course.title }}
+    <i class="fa-solid fa-bug"></i>
+{% endblock title %}
+
 {% block content %}
     <div class="container mt-3">
         <div class="row">
-            <div class="col-3">
-                {% include 'courses/partials/_categories.html' %}
+            <div class="col-4">
+                <img src="{% static 'courses/img/'|add:course.imageUrl %}" class="img-fluid rounded-start" alt="{{ course.title }}">
             </div>
-            <div class="col-9">
-                {% for course in courses %}
-                        {% include 'courses/partials/_course.html' %}
-                {% endfor %}
+            <div class="col-8">
+                <h1 class="h3"> {{course.title}} </h1>
+                <p>
+                    {{course.description}}
+                </p>
             </div>
         </div>
     </div>
 {% endblock %}
 
-{% block title %}
-    Kurslar
-    <i class="fa-solid fa-bug"></i>
-{% endblock title %}
+
 
 {% block js_files %}
     <script src="{% static 'courses/js/script.js' %}"></script>

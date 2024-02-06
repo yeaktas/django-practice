@@ -1,9 +1,10 @@
 from datetime import date
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, Http404
+from . models import Course, Category
 
 # Create your views here.
 
@@ -58,8 +59,10 @@ db = {
 
 def index(request):
     #list comprehension
-    kurslar = [course for course in db["courses"] if course["isActive"] == True]
-    kategoriler = db["categories"]
+    #kurslar = [course for course in db["courses"] if course["isActive"] == True]
+    #kategoriler = db["categories"]
+    kurslar = Course.objects.filter(isActive=1)
+    kategoriler = Category.objects.all()
 
     #for kurs in db["courses"]:
     #    if kurs["isActive"]:
@@ -70,8 +73,13 @@ def index(request):
         'courses': kurslar,
     })
 
-def details(request, kurs_adi):
-    return HttpResponse(f'{kurs_adi} kurs detay sayfasi')
+def details(request, slug):
+    course = get_object_or_404(Course, slug=slug)
+
+    context = {
+        'course': course
+    }
+    return render(request, 'courses/details.html', context)
 
 def getCoursesByCategory(request, category_name):
     try:

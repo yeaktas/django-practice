@@ -22,15 +22,20 @@
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title"> {{ course.title }} </h5>
+                <h5 class="card-title">
+                    <a href=" {% url 'course_details' course.slug %}">
+                    {{ course.title }} 
+                    </a> 
+                </h5>
                 <p class="card-text"> {{ course.description }} </p>
-                <p>
+                <p> {{course.date|date:'SHORT_DATE_FORMAT'}} </p>
+{% comment %}                 <p>
                     {% if course.isUpdated %}
                         <span class="badge bg-success">Güncellendi</span>
                     {% else %}
                         <span class="badge bg-warning">Güncelleme bekliyor.</span>
                     {% endif %}
-                </p>
+                </p> {% endcomment %}
             </div>
         </div>
     </div>
